@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://ztaylor:VnvrY1uQj1MLQE97@cluster0.0865e.mongodb.net/socialseniors?retryWrites=true&w=majority",
+    "jwtSecret": "JWT SECRET HERE"
+}
