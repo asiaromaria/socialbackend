@@ -6,8 +6,52 @@ const router = express.Router();
 
 // const { models } = require("mongoose");
 
+router.post('/', async (req, res) => {
+  try {
+    const { error } = validateUser(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    let user = await User.findOne({ email: req.body.email });
+    if (user) return res.status(400).send('User already registered.');
+    const salt = await bcrypt.genSalt(10);
+  user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: await bcrypt.hash(req.body.password, salt),
+  });
+    await user.save();
+    return res.send({ _id: user._id, name: user.name, email: user.email });
+  } catch (ex) {
+  return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+ });
+// creating new user
+// router.post("/", auth, async (req, res) => {
+//   try {
+//     let user = await User.findOne({email: req.body.email});
+//     if (user) return res.status(400).send(error);
+
+//     const salt = await bcrypt.genSalt(10);
+//     user = new User({
+//       name: req.body.name,
+//       email: req.body.email,
+//       password: await bcrypt.hash(req.body.password, salt),
+//     });
+//     await user.save();
+//     const token = user.generateAuthToken();
+
+//     return res
+//       .header("x-auth-token", token)
+//       .header("access-control-expose-headers", "x-auth-token")
+//       .send({ _id: user._id, name: user.name, email: user.email });
+//   } catch (ex) {
+//     return res.status(500).send(`Internal Server Error: ${ex}`);
+//   }
+// });
+
+
+
 //register
-router.post("/:", auth, async (req, res) => {
+router.post("/:userId/shoppingcart/:productId", auth, async (req, res) => {
   try {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -31,7 +75,7 @@ router.post("/:", auth, async (req, res) => {
   }
 });
 
-router.put("/:userId/shoppingcart/:productId", async (req, res) => {
+router.put("/:userId/shoppingcart/:productId", auth, async (req, res) => {
   try {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error);
@@ -59,7 +103,8 @@ router.put("/:userId/shoppingcart/:productId", async (req, res) => {
   }
 });
 
-router.delete("/:userId/shoppingcart/:productId", async (req, res) => {
+//
+router.delete("/:userId/shoppingcart/:productId", auth, async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user)
