@@ -7,12 +7,12 @@ const router = express.Router();
 
 // const { models } = require("mongoose");
 // All users
-router.get('/', [auth,admin], async(req,res)=>{
+router.get('/', async(req,res)=>{
   try{
     const users = await User.find();
-    const salt = await bcrypt.genSalt(10);
-    await user.save();
-    const token = user.generateAuthToken()
+    // const salt = await bcrypt.genSalt(10);
+    // await user.save();
+    // const token = user.generateAuthToken()
 
     return res
     // .header("x-auth-token", token)
@@ -67,7 +67,7 @@ router.get('/userId', [auth,admin], async(req,res)=>{
 //   }
 //  });
 // creating new user
-router.post("/", auth, async (req, res) => {
+router.post("/",  async (req, res) => {
   try {
     let user = await User.findOne({email: req.body.email});
     if (user) return res.status(400).send(error);
@@ -149,8 +149,8 @@ router.put("/:userId", [auth,admin], async (req, res) => {
   }
 });
 
-//
-router.delete("/:userId", auth, async (req, res) => {
+//Delete User by ID
+router.delete("/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user)
@@ -158,7 +158,7 @@ router.delete("/:userId", auth, async (req, res) => {
         .status(400)
         .send(`The user with id "${req.params.userId}" does not exist.`);
     let users = user.id(req.params.userId);
-    if (!user)
+    if (!user)  m
       return res
         .status(400)
         .send(`The user with id "${req.params.userId}" does not in the users shopping cart.`);
