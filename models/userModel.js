@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     name:  { type: String, required: true, minlength: 2, maxlength: 50 },
     email: { type: String, unique: true, required: true, minlength: 5, maxlength: 255 },
     password: { type: String, required: true, minlength: 5, maxlength: 1024 },
-    isAdmin: {type: Boolean, default: true },
+    isAdmin: {type: Boolean, default: true},
 });
 
 
@@ -30,6 +30,6 @@ function validateUser(user) {
 }
 
 
-exports.User = User; 
-exports.validateUser = validateUser; 
-exports.userSchema = userSchema; 
+exports.User = User;
+exports.validateUser = validateUser;
+exports.userSchema = userSchema;
