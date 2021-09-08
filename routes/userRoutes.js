@@ -119,9 +119,9 @@ router.post("/", [auth, admin], async (req, res) => {
 
 
 
-router.put("/:userId", [auth,admin], async (req, res) => {
+router.put("/:userId", async (req, res) => {
   try {
-    const { error } = validate(req.body);
+    const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error);
     
     const salt = await bcrypt.genSalt(10);
@@ -150,27 +150,14 @@ router.put("/:userId", [auth,admin], async (req, res) => {
 });
 
 //Delete User by ID
-router.delete("/:userId", async (req, res) => {
+router.delete('/:userId', async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findByIdAndRemove(req.params.userId);
     if (!user)
-      return res
-        .status(400)
-        .send(`The user with id "${req.params.userId}" does not exist.`);
-    let users = user.id(req.params.userId);
-    if (!user)  m
-      return res
-        .status(400)
-        .send(`The user with id "${req.params.userId}" does not in the users shopping cart.`);
-    user = await user.remove();
-    await user.save();
-    return res
-      .header("x-auth-token", token)
-      .header("access-control-expose-headers", "x-auth-token")
-      .send({ _id: user._id, name: user.name, email: user.email, isAdmin: this.isAdmin });
+      return res.status(400).send(`The user with id "${req.params.userId}" does not exist.`);
+    return res.send(user);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
 });
-
 module.exports = router;
