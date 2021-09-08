@@ -17,25 +17,22 @@ router.get('/', async(req,res)=>{
     return res
     // .header("x-auth-token", token)
     // .header("access-control-expose-headers", "x-auth-token")
-    .send(users);;
+    .send(users);
     // { _id: user._id, name: user.name, email: user.email, isAdmin: this.isAdmin }
   } catch(ex){
     return res.status(500).send(`Internal Server Error:${ex}`);
   }
 })
-
-router.get('/userId', [auth,admin], async(req,res)=>{
+//Get User by ID
+router.get('/:userId', async(req,res)=>{
   try{
     const users = await User.findById(req.params.userId);
     if (!users) return res.status(400).send(`The user with id "${req.params.userId}" does not exist.`);
-    const salt = await bcrypt.genSalt(10);
-    await user.save();
-    const token = user.generateAuthToken()
+    // const salt = await bcrypt.genSalt(10);
+    // const token = user.generateAuthToken()
 
     return res
-    .header("x-auth-token", token)
-    .header("access-control-expose-headers", "x-auth-token")
-    .send({ _id: user._id, name: user.name, email: user.email, isAdmin: this.isAdmin });
+    .send(users);
   } catch(ex){
     return res.status(500).send(`Internal Server Error:${ex}`);
   }
