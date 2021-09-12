@@ -3,8 +3,7 @@ const  bcrypt  =  require('bcrypt');
 const  express  =  require('express');
 const  {  User  }  =  require('../models/userModel');
 const  router  =  express.Router();
-const { isError } = require('joi');
-
+// const { isError } = require('joi');
 
 router.post('/', async (req, res) => {
     try{

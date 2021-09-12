@@ -1,4 +1,4 @@
 {
     "mongoURI": "mongodb+srv://ztaylor:VnvrY1uQj1MLQE97@cluster0.0865e.mongodb.net/socialseniors?retryWrites=true&w=majority",
-    "jwtSecret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTMzN2MzOTY2NmY0YjQ5NGRmMjY4MzciLCJuYW1lIjoiam9obiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzMDc2NDEwNn0.6qy440MPQuNL0UFoFJupn3Q1MtnoiStIdHHH8cxGgK8"
+    "jwtSecret": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTNhYjNhZGExYzhhNDA5YmNjNDY3ZjkiLCJuYW1lIjoiVGVzdHkiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjMxMjM3MDM3fQ.ZFX7aVLmizZqSt_ZLRJaVFK6DmwfPLWk9lVi-gX7vcU"
 }
