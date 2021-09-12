@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     user = new User({
-      name: req.body.name,
+      userName: req.body.userName,
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, salt),
     });
@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
     return res
       .header('x-auth-token', token)
       .header('access-control-expose-headers', 'x-auth-token')
-      .send({ _id: user._id, name: user.name, email: user.email });
+      .send(user);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
   }
@@ -61,7 +61,7 @@ router.put("/:userId", auth, async (req, res) => {
     
     const salt = await bcrypt.genSalt(10);
     let user = await User.findByIdAndUpdate(req.params.userId,{
-      name : req.body.name,
+      userName : req.body.userName,
       email : req.body.email,
       password : await bcrypt.hash(req.body.password, salt),},
       {new: true}
@@ -77,7 +77,7 @@ router.put("/:userId", auth, async (req, res) => {
     return res
       .header("x-auth-token", token)
       .header("access-control-expose-headers", "x-auth-token")
-      .send({ _id: user._id, name: user.name, email: user.email, isAdmin: this.isAdmin });
+      .send({ _id: user._id, userName: user.userName, email: user.email, isAdmin: this.isAdmin });
 
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);
